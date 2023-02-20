@@ -1,0 +1,18 @@
+[project]
+name = "replbuilder"
+version = "0.1.0"
+description = "A few interface and argparse overrides to help quickly build a repl tool"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["repl", "repl builder"]
+authors = [
+  {name = "Rocky Li", email = "aperocky@gmail.com" }
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Aperocky/replbuilder"
+"Source" = "https://github.com/Aperocky/replbuilder"
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
