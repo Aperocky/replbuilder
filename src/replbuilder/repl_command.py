@@ -28,14 +28,14 @@ class ReplCommand:
             raise ValueError("parser must support 'parse_known_args' function")
         if not callable(runner):
             raise ValueError("runner must be callable")
-        parser.exit = parser_exit
+        parser.exit = parser_exit # argparse use sysexit, override
         parser.error = parser_error
         parser.print_help = green_print(parser.print_help)
         parser.prog = command
-        self.command = command # command string itself, i.e. "pip"
+        self.command = command # command string itself, e.g. "pip"
         self.parser = parser # argparse parser to parse the arguments
         self.runner = runner # runner that will be fed the parsed arguments
-        self.helpstr = helpstr
+        self.helpstr = helpstr # help for overall command
 
     def run(self, command_input):
         args = self.parser.parse_args(args=command_input)
