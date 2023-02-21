@@ -1,6 +1,7 @@
 import argparse
 import sys
 import shlex
+import readline
 from .repl_command import ReplCommand, ParserError
 
 

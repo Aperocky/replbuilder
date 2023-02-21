@@ -6,7 +6,7 @@ def parser_exit(*args):
     raise ParserError("argparse attempted to exit")
 
 
-def parser_error(func):
+def parser_error(*args):
     print("\033[0;31merror parsing argument\033[0m")
     raise ParserError("argparse cannot parse argument")
 
