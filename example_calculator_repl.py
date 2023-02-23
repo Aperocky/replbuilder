@@ -1,8 +1,22 @@
 from replbuilder import ReplCommand, ReplRunner
 import argparse
+import random
 
 
 class Calculator:
+
+    @staticmethod
+    def basic_parser():
+        parser = argparse.ArgumentParser()
+        parser.add_argument("x", type=float, help="a number")
+        parser.add_argument("y", type=float, help="another number")
+        return parser
+
+    @staticmethod
+    def factorial_parser():
+        parser = argparse.ArgumentParser()
+        parser.add_argument("x", type=int, help="must be integer no larger than 100")
+        return parser
 
     def add(self, args):
         print(args.x + args.y)
@@ -13,47 +27,74 @@ class Calculator:
     def mult(self, args):
         print(args.x * args.y)
 
-    def div(self, args):
-        print(args.x / args.y)
+    def factorial(self, args):
+        x = args.x
+        if x > 100:
+            raise ValueError("Too large for factorial")
+        result = 1
+        while x > 1:
+            result *= x
+            x -= 1
+        print(result)
 
-    def pow(self, args):
-        print(args.x ** args.y)
 
-    def cowsay(self, args):
+class Cow:
+
+    @staticmethod
+    def get_cowsay_parser():
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-w", "--word", default=None, help="cow will say this")
+        return parser
+
+    def cowsay(self, args, context):
         word = args.word
         if not word:
-            print("cowsay: moo")
+            print("cowsay: {}".format(context.word))
         else:
             print("cowsay: {}".format(word))
 
-
-def get_calc_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("x", type=float)
-    parser.add_argument("y", type=float)
-    return parser
+    def cowmood(self, args, context):
+        print("cow feels {}".format(context.mood))
+        context.generate_random_mood()
 
 
-def get_cowsay_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-w", "--word", default=None, help="cow will say this")
-    return parser
+class CowContext:
+
+    # In real world, this context here would entail clients/state or data
+    # To be populated, modified, used or passed between commands.
+    def __init__(self):
+        self.word = "replbuilder is a fast and easy way to build repl cli"
+        self.mood = "MOO"
+
+    def generate_random_mood(self):
+        self.mood = ["MOO", "MOOMOO", "MUMUMU", "UNC"][random.randint(0, 3)]
+
+
+def exception_handler(e):
+    print("custom exception_handler caught {}: {}".format(type(e).__name__, e))
 
 
 def main():
-    calc_parser = get_calc_parser()
-    cow_parser = get_cowsay_parser()
     calculator = Calculator()
+    cow = Cow()
+    cow_context = CowContext()
+    commands = []
 
-    add_cmd = ReplCommand("add", calc_parser, calculator.add, "Add 2 numbers")
-    sub_cmd = ReplCommand("sub", calc_parser, calculator.sub, "Subtract second number from first")
-    mult_cmd = ReplCommand("mult", calc_parser, calculator.mult, "Multiply 2 numbers")
-    div_cmd = ReplCommand("div", calc_parser, calculator.div, "Divide second number from first")
-    pow_cmd = ReplCommand("pow", calc_parser, calculator.pow, "x to the power of y")
-    cow_cmd = ReplCommand("cow", cow_parser, calculator.cowsay, "say stuff, demo optional")
+    # Calculator commands
+    add_cmd = ReplCommand("add", Calculator.basic_parser(), calculator.add, "Add 2 numbers")
+    sub_cmd = ReplCommand("sub", Calculator.basic_parser(), calculator.sub, "Subtract second number from first")
+    mult_cmd = ReplCommand("mult", Calculator.basic_parser(), calculator.mult, "Multiply 2 numbers")
+    fact_cmd = ReplCommand("factorial", Calculator.factorial_parser(), calculator.factorial, "factorial with exception handler", exception_handler=exception_handler)
+    commands.extend([add_cmd, sub_cmd, mult_cmd, fact_cmd])
 
-    runner = ReplRunner("calculator")
-    runner.add_commands([add_cmd, sub_cmd, mult_cmd, div_cmd, pow_cmd, cow_cmd])
+    # Cow commands
+    say_cmd = ReplCommand("cowsay", Cow.get_cowsay_parser(), cow.cowsay, "say stuff, demo optional and context usage", use_context=True)
+    mood_cmd = ReplCommand("cowmood", argparse.ArgumentParser(), cow.cowmood, "Mood of the cow changes with global context object", use_context=True)
+    commands.extend([say_cmd, mood_cmd])
+
+    # Running repl with above commands
+    runner = ReplRunner("cowculator", cow_context)
+    runner.add_commands(commands)
     runner.run()
 
 

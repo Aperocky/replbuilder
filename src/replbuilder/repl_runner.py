@@ -7,9 +7,10 @@ from .repl_command import ReplCommand, ParserError
 
 class ReplRunner:
 
-    def __init__(self, name="repl"):
+    def __init__(self, name="repl", context=None):
         self.name = name
         self.commands = {}
+        self.context = context
 
     def add_commands(self, repl_commands):
         for repl_cmd in repl_commands:
@@ -39,7 +40,7 @@ class ReplRunner:
             print("Leaving {}".format(self.name))
             sys.exit(0)
         if command in self.commands:
-            self.commands[command].run(cmd_split[1:])
+            self.commands[command].run(cmd_split[1:], self.context)
         else:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
