@@ -3,6 +3,10 @@ import sys
 import shlex
 import readline
 from .repl_command import ReplCommand, ParserError
+from collections import namedtuple
+
+
+CmdHelp = namedtuple("CmdHelp", "cmd help")
 
 
 class ReplRunner:
@@ -11,12 +15,23 @@ class ReplRunner:
         self.name = name
         self.commands = {}
         self.context = context
+        # Group commands via namespace for display
+        self.command_namespaces = {"Default": []}
 
-    def add_commands(self, repl_commands):
+    def add_commands(self, repl_commands, namespace=None):
+        chs = []
         for repl_cmd in repl_commands:
             if not isinstance(repl_cmd, ReplCommand):
                 raise ValueError("Commands added must be ReplCommand type")
             self.commands[repl_cmd.command] = repl_cmd
+            chs.append(CmdHelp(repl_cmd.command, repl_cmd.helpstr))
+        if namespace is None:
+            self.command_namespaces["Default"].extend(chs)
+        else:
+            if namespace in self.command_namespaces:
+                self.command_namespaces[namespace].extend(chs)
+            else:
+                self.command_namespaces[namespace] = chs
 
     def run(self):
         while True:
@@ -45,8 +60,18 @@ class ReplRunner:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
     def help(self):
-        print("\033[0;32m", end="")
-        print("List of available commands: ")
-        longest = max(map(lambda c: len(c), self.commands))
-        for name, cmd in self.commands.items():
-            print("\033[0;36m{command: <{pad}}\033[0m{desc}".format(command=name, pad=longest+8, desc=cmd.helpstr))
+        print("\033[0;32mList of available commands:")
+        maxlen = max(map(lambda c: len(c), self.commands))
+        default_commands = self.command_namespaces["Default"]
+        if default_commands:
+            for c in default_commands:
+                print("\033[0;36m{command: <{pad}}\033[0m{desc}"
+                .format(command=c.cmd, pad=maxlen+8, desc=c.help))
+        # custom namespaces in their own sections
+        for namespace, clist in self.command_namespaces.items():
+            if namespace == "Default":
+                continue
+            print("\033[0;35m{}\033[0m".format(namespace))
+            for c in clist:
+                print("\033[0;36m    {command: <{pad}}\033[0m{desc}"
+                .format(command=c.cmd, pad=maxlen+4, desc=c.help))

@@ -1,0 +1,22 @@
+#!/bin/zsh
+# A shell heredoc to test the example file without manual intervention
+# cli input is swallowed in print, however output will be displayed.
+
+# required for loading PATH that contains site packages.
+source ~/.zshrc
+
+python example_calculator_repl.py <<EOD
+    help
+    add 2 3
+    mult 2 3
+    factorial -h
+    factorial 5
+    factorial five
+    factorial 120
+    cowmood
+    cowmood
+    cowsay -h
+    cowsay -w hi
+    cowsay
+    exit
+EOD

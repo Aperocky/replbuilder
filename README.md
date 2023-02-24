@@ -17,14 +17,16 @@ see [example calculator repl](example_calculator_repl.py) for example implementa
 ```
 add_cmd = ReplCommand("add", Calculator.basic_parser(), calculator.add, "Add 2 numbers")
 sub_cmd = ReplCommand("sub", Calculator.basic_parser(), calculator.sub, "Subtract second number from first")
-mult_cmd = ReplCommand("mult", Calculator.basic_parser(), calculator.mult, "Multiply 2 numbers")
-
-# More advanced usage
 fact_cmd = ReplCommand("factorial", Calculator.factorial_parser(), calculator.factorial, "factorial with exception handler", exception_handler=exception_handler)
+say_cmd = ReplCommand("cowsay", Cow.get_cowsay_parser(), cow.cowsay, "say stuff, demo optional and context usage", use_context=True)
 mood_cmd = ReplCommand("cowmood", argparse.ArgumentParser(), cow.cowmood, "Mood of the cow changes with global context object", use_context=True)
+calc_commands = [add_cmd, sub_cmd, fact_cmd]
+cow_commands = [say_cmd, mood_cmd]
 
-runner = ReplRunner("calculator", context)
-runner.add_commands([add_cmd, sub_cmd, mult_cmd, fact_cmd, mood_cmd])
+context = ContextObj()
+runner = ReplRunner("calculator", context) # context is optional, but it helps maintaining state and avoiding duplicate work.
+runner.add_commands(calc_commands, namespace="Calculator") # namespace is optional
+runner.add_commands(cow_commands, namespace="Cow")
 runner.run()
 ```
 

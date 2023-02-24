@@ -78,23 +78,23 @@ def main():
     calculator = Calculator()
     cow = Cow()
     cow_context = CowContext()
-    commands = []
 
     # Calculator commands
     add_cmd = ReplCommand("add", Calculator.basic_parser(), calculator.add, "Add 2 numbers")
     sub_cmd = ReplCommand("sub", Calculator.basic_parser(), calculator.sub, "Subtract second number from first")
     mult_cmd = ReplCommand("mult", Calculator.basic_parser(), calculator.mult, "Multiply 2 numbers")
     fact_cmd = ReplCommand("factorial", Calculator.factorial_parser(), calculator.factorial, "factorial with exception handler", exception_handler=exception_handler)
-    commands.extend([add_cmd, sub_cmd, mult_cmd, fact_cmd])
+    calc_commands = [add_cmd, sub_cmd, mult_cmd, fact_cmd]
 
     # Cow commands
     say_cmd = ReplCommand("cowsay", Cow.get_cowsay_parser(), cow.cowsay, "say stuff, demo optional and context usage", use_context=True)
     mood_cmd = ReplCommand("cowmood", argparse.ArgumentParser(), cow.cowmood, "Mood of the cow changes with global context object", use_context=True)
-    commands.extend([say_cmd, mood_cmd])
+    cow_commands = [say_cmd, mood_cmd]
 
     # Running repl with above commands
     runner = ReplRunner("cowculator", cow_context)
-    runner.add_commands(commands)
+    runner.add_commands(calc_commands, namespace="Calculator")
+    runner.add_commands(cow_commands, namespace="Cow")
     runner.run()
 
 
