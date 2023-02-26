@@ -1,6 +1,7 @@
 from replbuilder import ReplCommand, ReplRunner
 import argparse
 import random
+import re
 
 
 class Calculator:
@@ -51,6 +52,8 @@ class Cow:
         if not word:
             print("cowsay: {}".format(context.word))
         else:
+            if re.search("beef", word, re.IGNORECASE):
+                raise ValueError("Cow does not like to mention beef")
             print("cowsay: {}".format(word))
 
     def cowmood(self, args, context):
@@ -92,7 +95,7 @@ def main():
     cow_commands = [say_cmd, mood_cmd]
 
     # Running repl with above commands
-    runner = ReplRunner("cowculator", cow_context)
+    runner = ReplRunner("cowculator", context=cow_context, catch_exception=True)
     runner.add_commands(calc_commands, namespace="Calculator")
     runner.add_commands(cow_commands, namespace="Cow")
     runner.run()

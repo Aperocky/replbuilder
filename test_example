@@ -17,6 +17,7 @@ python example_calculator_repl.py <<EOD
     cowmood
     cowsay -h
     cowsay -w hi
+    cowsay -w beef
     cowsay
     exit
 EOD

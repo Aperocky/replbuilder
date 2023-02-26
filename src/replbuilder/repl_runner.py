@@ -11,12 +11,13 @@ CmdHelp = namedtuple("CmdHelp", "cmd help")
 
 class ReplRunner:
 
-    def __init__(self, name="repl", context=None):
+    def __init__(self, name="repl", context=None, catch_exception=True):
         self.name = name
         self.commands = {}
         self.context = context
         # Group commands via namespace for display
         self.command_namespaces = {"Default": []}
+        self.catch_exception = catch_exception
 
     def add_commands(self, repl_commands, namespace=None):
         chs = []
@@ -40,8 +41,11 @@ class ReplRunner:
                 self.run_command(cmd_input)
             except ParserError as e:
                 pass
-            except InterruptedError:
-                raise
+            except Exception as e:
+                if self.catch_exception:
+                    print("\033[0;31mCaught {}: {}\033[0m".format(type(e).__name__, e))
+                else:
+                    raise e
 
     def run_command(self, cmd_input):
         cmd_split = shlex.split(cmd_input)
