@@ -10,6 +10,20 @@ CmdHelp = namedtuple("CmdHelp", "cmd help")
 
 
 class ReplRunner:
+    """The orchestrator and runner of the REPL.
+
+    Keyword Arguments
+        - name: Name of the repl, it will be displayed before each command is entered, e.g.:
+            YourReplName > command --arg_name arg_val
+        - context:
+            A context object, this can be potentially passed to all commands that are marked
+            use_context=True. this is very useful as state, common objects, and data can be
+            stored in the context object.
+        - catch_exception:
+            Catch any exception thrown from any commands and show their message, this blocks
+            exceptions from interrupting the main REPL and exiting the CLI environment. However,
+            it maybe useful to turn it off for debug purposes.
+    """
 
     def __init__(self, name="repl", context=None, catch_exception=True):
         self.name = name
@@ -20,6 +34,14 @@ class ReplRunner:
         self.catch_exception = catch_exception
 
     def add_commands(self, repl_commands, namespace=None):
+        """Add commands to the REPL
+
+        This take a list of ReplCommands and register them with ReplRunner
+
+        It can also take namespace argument, with which provided commands will
+        be listed under that namespace together, for better organization and
+        visibility.
+        """
         chs = []
         for repl_cmd in repl_commands:
             if not isinstance(repl_cmd, ReplCommand):
@@ -35,6 +57,7 @@ class ReplRunner:
                 self.command_namespaces[namespace] = chs
 
     def run(self):
+        """This invokes the REPL with all registered commands."""
         while True:
             try:
                 cmd_input = input("\033[0;33m{} > \033[0m".format(self.name))
@@ -48,6 +71,15 @@ class ReplRunner:
                     raise e
 
     def run_command(self, cmd_input):
+        """Whenever return key is pressed in the REPL, it will invoke this function.
+
+        This function does a little sanity check to make sure the command make sense:
+
+            1. If it's an empty string, don't do anything.
+            2. If it is "help", show the global help string of all commands.
+            3. If it is "exit", end the program.
+            4. If the command is within the list of command registered, invoke that.
+        """
         cmd_split = shlex.split(cmd_input)
         if not cmd_split:
             return
@@ -64,6 +96,9 @@ class ReplRunner:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
     def help(self):
+        """This provides the global help string of all commands, separated by namespace,
+        if namespaces are given.
+        """
         print("\033[0;32mList of available commands:")
         maxlen = max(map(lambda c: len(c), self.commands))
         default_commands = self.command_namespaces["Default"]
