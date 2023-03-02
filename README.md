@@ -8,7 +8,7 @@ Quickly build a repl cli prompt in python.
 
 A globally scoped context object can be optionally passed into each command, making context sharing and state possible.
 
-Each command can also accomodate optional custom exception handler, allowing for the same exception handler to be passed into multiple different commands.
+Each command can also accommodate optional custom exception handler, allowing for the same exception handler to be passed into multiple different commands.
 
 ## Example
 
