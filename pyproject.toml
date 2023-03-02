@@ -1,6 +1,6 @@
 [project]
 name = "replbuilder"
-version = "1.0.0"
+version = "1.0.1"
 description = "A few interface and argparse overrides to help quickly build a repl tool"
 readme = "README.md"
 license = {text = "MIT"}

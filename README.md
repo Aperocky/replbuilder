@@ -2,7 +2,7 @@
 
 `pip install replbuilder`
 
-Quickly build a repl cli prompt in python.
+Quickly build a repl cli prompt for custom commands in python.
 
 `argparse` is used for quick and easy parsing interface, some options are overriden for using it within a repl prompt. But you should be able to utilize the full power of `argparse` as your repl parser.
 

@@ -92,6 +92,7 @@ class ReplRunner:
             sys.exit(0)
         if command in self.commands:
             self.commands[command].run(cmd_split[1:], self.context)
+            print() # Add a space after output and prior to next input for clear delineation.
         else:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
