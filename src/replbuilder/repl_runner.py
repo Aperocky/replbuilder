@@ -62,6 +62,9 @@ class ReplRunner:
             try:
                 cmd_input = input("\033[0;33m{} > \033[0m".format(self.name))
                 self.run_command(cmd_input)
+            except KeyboardInterrupt as e:
+                print("Leaving {}".format(self.name))
+                return
             except ParserError as e:
                 pass
             except Exception as e:
