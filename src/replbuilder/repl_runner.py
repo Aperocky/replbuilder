@@ -1,4 +1,6 @@
 import argparse
+import os
+import textwrap
 import sys
 import shlex
 import readline
@@ -99,6 +101,21 @@ class ReplRunner:
         else:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
+    def print_cmd_help(self, ch, maxlen, default=True):
+        term_width = os.get_terminal_size().columns
+        line_width = term_width - maxlen - 24
+        helplines = textwrap.wrap(ch.help, line_width)
+        if not helplines:
+            helplines.append("")
+        if default:
+            print("\033[0;36m{command: <{pad}}\033[0m{desc}"
+                .format(command=ch.cmd, pad=maxlen+8, desc=helplines[0]))
+        else:
+            print("\033[0;36m    {command: <{pad}}\033[0m{desc}"
+                .format(command=ch.cmd, pad=maxlen+4, desc=helplines[0]))
+        for line in helplines[1:]:
+            print(" "*(maxlen + 8) + line)
+
     def help(self):
         """This provides the global help string of all commands, separated by namespace,
         if namespaces are given.
@@ -108,13 +125,12 @@ class ReplRunner:
         default_commands = self.command_namespaces["Default"]
         if default_commands:
             for c in default_commands:
-                print("\033[0;36m{command: <{pad}}\033[0m{desc}"
-                .format(command=c.cmd, pad=maxlen+8, desc=c.help))
+                self.print_cmd_help(c, maxlen)
         # custom namespaces in their own sections
         for namespace, clist in self.command_namespaces.items():
             if namespace == "Default":
                 continue
             print("\033[0;35m{}\033[0m".format(namespace))
             for c in clist:
-                print("\033[0;36m    {command: <{pad}}\033[0m{desc}"
-                .format(command=c.cmd, pad=maxlen+4, desc=c.help))
+                self.print_cmd_help(c, maxlen, False)
+

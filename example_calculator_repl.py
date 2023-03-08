@@ -91,8 +91,8 @@ def main():
 
     # Cow commands
     say_cmd = ReplCommand("cowsay", Cow.get_cowsay_parser(), cow.cowsay, "say stuff, demo optional and context usage", use_context=True)
-    mood_cmd = ReplCommand("cowmood", argparse.ArgumentParser(), cow.cowmood, "Mood of the cow changes with global context object", use_context=True)
-    cow_commands = [say_cmd, mood_cmd]
+    mood_cmd = ReplCommand("cowmood", argparse.ArgumentParser(), cow.cowmood, "Mood of the cow changes with global context object. This is also a really long line so I can make sure that the text are nicely tucked on the right side after the command and not wraps back to the list area. Aesthetic change from 1.0.4", use_context=True)
+    cow_commands = [mood_cmd, say_cmd]
 
     # Running repl with above commands
     runner = ReplRunner("cowculator", context=cow_context, catch_exception=True)
