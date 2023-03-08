@@ -1,7 +1,7 @@
 [project]
 name = "replbuilder"
-version = "1.0.2"
-description = "A few interface and argparse overrides to help quickly build a repl tool"
+version = "1.0.3"
+description = "Quickly build a custom command REPL environment with this tool"
 readme = "README.md"
 license = {text = "MIT"}
 keywords = ["repl", "repl builder"]

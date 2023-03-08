@@ -87,7 +87,7 @@ class ReplRunner:
         if not cmd_split:
             return
         command = cmd_split[0]
-        if command in ["help", "h"]:
+        if command in ["help", "h", "ls"]:
             self.help()
             return
         if command in ["exit", "q", "exit()"]:
