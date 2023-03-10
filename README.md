@@ -10,6 +10,8 @@ A globally scoped context object can be optionally passed into each command, mak
 
 Each command can also accommodate optional custom exception handler, allowing for the same exception handler to be passed into multiple different commands.
 
+See project [hnterminal](https://github.com/Aperocky/hnterminal), browse HN in your terminal.
+
 ## Example
 
 see [example calculator repl](example_calculator_repl.py) for example implementation. The gist can be concluded in a few lines:

@@ -40,7 +40,11 @@ class ReplCommand:
         - exception_handler: A custom exception handler (callable) to handle any exception.
     """
 
+    RESERVED_STRINGS = ["help", "h", "ls", "q", "exit"]
+
     def __init__(self, command, parser, runner, helpstr="", use_context=False, exception_handler=None):
+        if command in ReplCommand.RESERVED_STRINGS:
+            raise ValueError("command cannot be one of {}".format(ReplCommand.RESERVED_STRINGS))
         if any([not isinstance(command, str), " " in command]):
             raise ValueError("command must be a non-space delineated string")
         if not callable(getattr(parser, "parse_args", None)):
