@@ -25,15 +25,19 @@ class ReplRunner:
             Catch any exception thrown from any commands and show their message, this blocks
             exceptions from interrupting the main REPL and exiting the CLI environment. However,
             it maybe useful to turn it off for debug purposes.
+        - vi_mode:
+            Use vi mode within the CLI environment, highly recommend if you use vim
     """
 
-    def __init__(self, name="repl", context=None, catch_exception=True):
+    def __init__(self, name="repl", context=None, catch_exception=True, vi_mode=False):
         self.name = name
         self.commands = {}
         self.context = context
         # Group commands via namespace for display
         self.command_namespaces = {"Default": []}
         self.catch_exception = catch_exception
+        if vi_mode:
+            readline.parse_and_bind("set editing-mode vi")
 
     def add_commands(self, repl_commands, namespace=None):
         """Add commands to the REPL

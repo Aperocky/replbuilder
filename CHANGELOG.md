@@ -1,3 +1,7 @@
+### 1.0.6
+
+Minor update: add `vi_mode` flag to runner to allow command editing in `vi` mode.
+
 ### 1.0.5
 
 Minor bugfix: Prevent registering of reserved keywords (e.g. `help`, `exit`) as commands.

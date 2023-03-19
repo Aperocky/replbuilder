@@ -95,7 +95,7 @@ def main():
     cow_commands = [mood_cmd, say_cmd]
 
     # Running repl with above commands
-    runner = ReplRunner("cowculator", context=cow_context, catch_exception=True)
+    runner = ReplRunner("cowculator", context=cow_context, vi_mode=True)
     runner.add_commands(calc_commands, namespace="Calculator")
     runner.add_commands(cow_commands, namespace="Cow")
     runner.run()

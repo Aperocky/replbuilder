@@ -1,5 +1,7 @@
 ## ReplBuilder
 
+![PyPI version](http://img.shields.io/pypi/v/replbuilder.svg)
+
 `pip install replbuilder`
 
 Quickly build a repl cli prompt for custom commands in python.
