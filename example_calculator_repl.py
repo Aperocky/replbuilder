@@ -98,6 +98,10 @@ def main():
     runner = ReplRunner("cowculator", context=cow_context, vi_mode=True)
     runner.add_commands(calc_commands, namespace="Calculator")
     runner.add_commands(cow_commands, namespace="Cow")
+    runner.add_aliases({
+        "cs": "cowsay -w",
+        "fac": "factorial"
+    })
     runner.run()
 
 

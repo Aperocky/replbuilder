@@ -1,3 +1,6 @@
+import re
+
+
 class ParserError(ValueError):
     pass
 
@@ -40,12 +43,12 @@ class ReplCommand:
         - exception_handler: A custom exception handler (callable) to handle any exception.
     """
 
-    RESERVED_STRINGS = ["help", "h", "ls", "q", "exit"]
+    RESERVED_STRINGS = ["help", "h", "ls", "q", "exit", "exit()"]
 
     def __init__(self, command, parser, runner, helpstr="", use_context=False, exception_handler=None):
         if command in ReplCommand.RESERVED_STRINGS:
             raise ValueError("command cannot be one of {}".format(ReplCommand.RESERVED_STRINGS))
-        if any([not isinstance(command, str), " " in command]):
+        if any([not isinstance(command, str), not re.match(r"^\w+$", command)]):
             raise ValueError("command must be a non-space delineated string")
         if not callable(getattr(parser, "parse_args", None)):
             raise ValueError("parser must support 'parse_args' function")

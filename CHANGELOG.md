@@ -1,26 +1,32 @@
+### 1.1.0
+
+feature release: add `add_aliases` to allow `alias` mapping for longer command and arguments. 
+
+Note: some previously accepted commands (e.g. "my-command") may stop working as this new version enforces regex `^\w+$` for command string, `_` would still work. This is a good restriction in my opinion to avoid confusion on the argument parser.
+
 ### 1.0.6
 
-Minor update: add `vi_mode` flag to runner to allow command editing in `vi` mode.
+small update: add `vi_mode` flag to runner to allow cli env key binding in `vi` mode.
 
 ### 1.0.5
 
-Minor bugfix: Prevent registering of reserved keywords (e.g. `help`, `exit`) as commands.
+bugfix: Prevent registering of reserved keywords (e.g. `help`, `exit`) as commands.
 
 ### 1.0.4
 
-Minor update: When help strings are long and requires wrapping when listing, do not wrap them under the commands, and tuck the description block nicely to the side.
+bugfix: When help strings are long and requires wrapping when listing, do not wrap them under the commands, and tuck the description block nicely to the side.
 
 ### 1.0.3
 
-Minor update: `ls` to work the same way as `help` in displaying all available commands.
+small update: `ls` to work the same way as `help` in displaying all available commands.
 
 ### 1.0.2
 
-Minor bugfix: Gracefully handle keyboard interrupt.
+bugfix: Gracefully handle keyboard interrupt.
 
 ### 1.0.1
 
-Minor update: Added a blank line after each command output for aesthetic and visibility.
+small update: Added a blank line after each command output for aesthetic and visibility.
 
 ### 1.0.0
 

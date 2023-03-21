@@ -1,6 +1,6 @@
 [project]
 name = "replbuilder"
-version = "1.0.6"
+version = "1.1.0"
 description = "Quickly build a custom command REPL environment with this tool"
 readme = "README.md"
 license = {text = "MIT"}

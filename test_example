@@ -9,12 +9,13 @@ python example_calculator_repl.py <<EOD
     help
     add 2 3
     mult 2 3
-    factorial -h
+    fac -h
     factorial 5
     factorial five
     factorial 120
     cowmood
     cowmood
+    cs "alias works"
     cowsay -h
     cowsay -w hi
     cowsay -w beef

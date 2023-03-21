@@ -8,11 +8,9 @@ Quickly build a repl cli prompt for custom commands in python.
 
 `argparse` is used for quick and easy parsing interface, some options are overriden for using it within a repl prompt. But you should be able to utilize the full power of `argparse` as your repl parser.
 
-A globally scoped context object can be optionally passed into each command, making context sharing and state possible.
+A globally scoped context object can be optionally passed into each command, making context sharing and state possible. It also supports custom exception handlers, and aliases, and more.
 
-Each command can also accommodate optional custom exception handler, allowing for the same exception handler to be passed into multiple different commands.
-
-See project [hnterminal](https://github.com/Aperocky/hnterminal), browse HN in your terminal.
+See project [hnterminal](https://github.com/Aperocky/hnterminal), browse, vote and comment on HN in your terminal.
 
 ## Example
 
