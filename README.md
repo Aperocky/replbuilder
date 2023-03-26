@@ -6,11 +6,13 @@
 
 Quickly build a repl cli prompt for custom commands in python.
 
-`argparse` is used for quick and easy parsing interface, some options are overriden for using it within a repl prompt. But you should be able to utilize the full power of `argparse` as your repl parser.
+`argparse` is used for quick and easy parsing interface, you should be able to utilize the full power of `argparse` as your command parser.
 
 A globally scoped context object can be optionally passed into each command, making context sharing and state possible. It also supports custom exception handlers, and aliases, and more.
 
-See project [hnterminal](https://github.com/Aperocky/hnterminal), browse, vote and comment on HN in your terminal.
+This is a standalone package, it does not depend on any other packages.
+
+For example, see project [hnterminal](https://github.com/Aperocky/hnterminal), browse, vote and comment on HN in your terminal.
 
 ## Example
 

@@ -133,6 +133,7 @@ class ReplRunner:
         if command in self.commands:
             self.commands[command].run(cmd_split[1:], self.context)
             print() # Add a space after output and prior to next input for clear delineation.
+            sys.stdout.flush() # Flush buffer to prevent pollution.
         else:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
