@@ -1,3 +1,11 @@
+### 1.2.0
+
+Fixes linewrap issues, this does impact coloring, but now lines wrap correctly.
+
+### 1.1.1
+
+Add flush after each command
+
 ### 1.1.0
 
 feature release: add `add_aliases` to allow `alias` mapping for longer command and arguments. 

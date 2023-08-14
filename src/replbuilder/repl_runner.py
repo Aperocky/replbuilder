@@ -1,10 +1,10 @@
-import argparse
 import os
 import re
-import textwrap
 import sys
 import shlex
 import readline
+import argparse
+import textwrap
 from .repl_command import ReplCommand, ParserError
 from collections import namedtuple
 
@@ -91,7 +91,9 @@ class ReplRunner:
         """
         while True:
             try:
-                cmd_input = input("\033[0;33m{} > \033[0m".format(self.name))
+                print("\033[0;97m") # Heightened color when available
+                cmd_input = input("{} > ".format(self.name))
+                print("\033[0m")
                 self.run_command(cmd_input)
             except KeyboardInterrupt as e:
                 print("Leaving {}".format(self.name))
@@ -132,7 +134,6 @@ class ReplRunner:
             return
         if command in self.commands:
             self.commands[command].run(cmd_split[1:], self.context)
-            print() # Add a space after output and prior to next input for clear delineation.
             sys.stdout.flush() # Flush buffer to prevent pollution.
         else:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
