@@ -5,7 +5,7 @@
 # required for loading PATH that contains site packages.
 source ~/.zshrc
 
-python example_calculator_repl.py <<EOD
+python example_calculator_repl.py << EOF > test_output
     help
     add 2 3
     mult 2 3
@@ -13,12 +13,20 @@ python example_calculator_repl.py <<EOD
     factorial 5
     factorial five
     factorial 120
-    cowmood
-    cowmood
     cs "alias works"
     cowsay -h
     cowsay -w hi
     cowsay -w beef
     cowsay
     exit
-EOD
+EOF
+
+diff test_output data/test_output > /dev/null
+
+if (( $? )) then
+    echo "Test Failed To Generate Same Expected Output, output file: test_output"
+    exit 1
+else
+    rm test_output
+    echo "Test Succeeded"
+fi

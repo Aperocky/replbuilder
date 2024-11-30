@@ -1,3 +1,7 @@
+### 1.2.1
+
+Adding test to its own file.
+
 ### 1.2.0
 
 Fixes linewrap issues, this does impact coloring, but now lines wrap correctly.

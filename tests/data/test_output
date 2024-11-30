@@ -1,0 +1,63 @@
+[0;97m
+cowculator > [0m
+[0;32mList of available commands:
+[1;35mCalculator[0m
+[0;36m    add          [0mAdd 2 numbers
+[0;36m    sub          [0mSubtract second number from first
+[0;36m    mult         [0mMultiply 2 numbers
+[0;36m    factorial    [0mfactorial with exception handler
+[1;35mCow[0m
+[0;36m    cowmood      [0mMood of the cow changes with global context object. This is also a
+                 really long line so I can make sure that the text are nicely tucked
+                 on the right side after the command and not wraps back to the list
+                 area. Aesthetic change from 1.0.4
+[0;36m    cowsay       [0msay stuff, demo optional and context usage
+[3;35mAlias[0m
+[3;37m    cs           [0;37mcowsay -w[0m
+[3;37m    fac          [0;37mfactorial[0m
+[0;97m
+cowculator > [0m
+5.0
+[0;97m
+cowculator > [0m
+6.0
+[0;97m
+cowculator > [0m
+[0;32musage: factorial [-h] x
+
+positional arguments:
+  x           must be integer no larger than 100
+
+options:
+  -h, --help  show this help message and exit
+[0m[0;97m
+cowculator > [0m
+120
+[0;97m
+cowculator > [0m
+[0;31merror parsing argument[0m
+[0;97m
+cowculator > [0m
+custom exception_handler caught ValueError: Too large for factorial
+[0;97m
+cowculator > [0m
+[0;31merror parsing argument[0m
+[0;97m
+cowculator > [0m
+[0;32musage: cowsay [-h] [-w WORD]
+
+options:
+  -h, --help       show this help message and exit
+  -w, --word WORD  cow will say this
+[0m[0;97m
+cowculator > [0m
+cowsay: hi
+[0;97m
+cowculator > [0m
+[0;31mCaught ValueError: Cow does not like to mention beef[0m
+[0;97m
+cowculator > [0m
+cowsay: replbuilder is a fast and easy way to build repl cli
+[0;97m
+cowculator > [0m
+Leaving cowculator

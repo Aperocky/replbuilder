@@ -139,7 +139,12 @@ class ReplRunner:
             print("\033[0;31mCommand {} not found\033[0m".format(command))
 
     def print_cmd_help(self, ch, maxlen, default=False, alias=False):
-        term_width = os.get_terminal_size().columns
+        term_width = 100
+        try:
+            term_width = os.get_terminal_size().columns
+        except OSError as e:
+            # Running this as a heredoc test would throw this error
+            pass
         line_width = term_width - maxlen - 24
         helplines = textwrap.wrap(ch.help, line_width)
         if not helplines:
